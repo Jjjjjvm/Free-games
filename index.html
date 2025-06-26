@@ -3,423 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ألعاب مجانية حسب المنصة والنوع</title>
+    <title>موقعي الشخصي</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom font for better Arabic readability */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
-            /* Green gradient background for Arabic feel */
-            background: linear-gradient(to bottom right, #dcfce7, #a7f3d0); /* Light to medium green */
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .main-wrapper { /* New wrapper for the main content to handle flex */
-            display: flex;
-            flex-direction: column; /* Default for small screens */
-            gap: 2rem;
-            width: 100%;
-            max-width: 1200px;
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            padding: 2.5rem;
-        }
-
-        /* Adjustments for medium and large screens */
-        @media (min-width: 768px) {
-            .main-wrapper {
-                flex-direction: row; /* Sidebar layout for larger screens */
-                align-items: flex-start; /* Align sidebar and content to top */
-            }
-            .filter-sidebar {
-                width: 280px; /* Fixed width for sidebar on larger screens */
-                flex-shrink: 0; /* Prevent shrinking */
-                padding-right: 2rem; /* Space between sidebar and content */
-                border-right: 1px solid #e0f0f5; /* Subtle separator */
-            }
-            .content-area {
-                flex-grow: 1; /* Take remaining space */
-                padding-left: 2rem; /* Space between sidebar and content */
-            }
-        }
-
-        .game-card {
-            background-color: #fcfdfe; /* Very light background for cards */
-            border-radius: 1rem; /* More rounded corners for cards */
-            padding: 1.5rem; /* Increased padding inside cards */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); /* Slightly more prominent shadow */
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            border: 1px solid #e0f0f5; /* Lighter, more subtle border */
-            cursor: pointer; /* Indicate clickable */
-            display: flex; /* Flexbox for internal layout */
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .game-card:hover {
-            transform: translateY(-8px) scale(1.01); /* More pronounced lift and slight scale */
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Deeper shadow on hover */
-        }
-        select, input[type="text"] {
-            border-radius: 0.75rem; /* More rounded inputs */
-            border: 1px solid #c5d4e1; /* Slightly darker border for inputs */
-            padding: 0.85rem 1.25rem; /* Slightly more padding */
-            background-color: #ffffff;
-            font-size: 1rem;
-            color: #334155;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        select:focus, input[type="text"]:focus {
-            outline: none;
-            border-color: #10B981; /* Green focus ring */
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3); /* Broader focus shadow */
-        }
-
-        /* Modal specific styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
-            padding: 20px; /* Padding around the modal */
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 2.5rem; /* Increased padding */
-            border-radius: 1.5rem;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-            max-width: 700px;
-            width: 100%;
-            position: relative;
-            animation: fadeIn 0.3s ease-out; /* Fade in animation */
-        }
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .close-button:hover,
-        .close-button:focus {
+            font-family: 'Cairo', 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
             color: #333;
-            text-decoration: none;
-            cursor: pointer;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 8px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #3b82f6; /* Blue underline */
+            border-radius: 9999px;
         }
     </style>
 </head>
-<body>
-    <div class="main-wrapper">
-        <div class="filter-sidebar flex flex-col gap-6">
-            <h1 class="text-4xl md:text-3xl font-extrabold text-gray-800 text-center md:text-right mb-4 tracking-tight">
-                مكتبة <span class="text-emerald-600">الألعاب المجانية</span>
-            </h1>
+<body class="antialiased">
+    <div class="min-h-screen flex flex-col items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 mb-8 text-center">
+            <!-- Removed the image tag as requested -->
+            <h1 class="text-4xl font-extrabold text-gray-800 mb-2 mt-4"> تميم المطيري </h1> <!-- Added mt-4 for spacing -->
+            <p class="text-xl text-gray-600"> مبرمج </p>
+            <nav class="mt-6">
+                <ul class="flex justify-center space-x-4 rtl:space-x-reverse">
+                    <li><a href="#about" class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">عني</a></li>
+                    <li><a href="#skills" class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">مهاراتي</a></li>
+                    <li><a href="#my-websites" class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">مواقعي</a></li>
+                    <!-- Removed Contact navigation link -->
+                </ul>
+            </nav>
+        </header>
 
-            <!-- Platform Filter (now for API fetch) -->
-            <div>
-                <label for="platform-filter" class="block text-gray-700 text-base font-medium mb-2">تصفية حسب المنصة:</label>
-                <select id="platform-filter" class="w-full">
-                    <option value="all">كل المنصات</option>
-                    <option value="pc">PC</option>
-                    <option value="browser">متصفح</option>
-                </select>
+        <!-- About Me Section -->
+        <section id="about" class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">عني</h2>
+            <p class="text-gray-700 leading-relaxed text-lg">
+                مرحباً! أنا تميم المطيري أعمل في مجال البرمجه ولدي شغف بـ البرمجه أؤمن بأن  البرمجه هي مفتاح المستقبل
+                خلال مسيرتي المهنية، اكتسبت خبرة في الذكاء الاصطناعي و البرمجه و التطوير بشكل عامأو المشاريع].
+                أبحث دائماً عن فرص جديدة للتعلم والتطور والمساهمة في مشاريع مبتكرة.
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">مهاراتي</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill Card 1: الفهم القرائي -->
+                <div class="bg-gray-50 p-5 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">الفهم القرائي</h3>
+                    <p class="text-gray-600">القدرة على استيعاب وتحليل النصوص المختلفة واستخلاص المعلومات منها.</p>
+                </div>
+                <!-- Skill Card 2: البرمجه -->
+                <div class="bg-gray-50 p-5 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">البرمجة</h3>
+                    <p class="text-gray-600">خبرة في تطوير التطبيقات والمواقع باستخدام لغات برمجة متنوعة.</p>
+                </div>
+                <!-- Skill Card 3: الذكاء الاصطناعي -->
+                <div class="bg-gray-50 p-5 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">الذكاء الاصطناعي</h3>
+                    <p class="text-gray-600">فهم عميق لمفاهيم وتطبيقات الذكاء الاصطناعي، بما في ذلك التعلم الآلي.</p>
+                </div>
+                <!-- Skill Card 4: التفكير العميق -->
+                <div class="bg-gray-50 p-5 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">التفكير العميق</h3>
+                    <p class="text-gray-600">القدرة على التحليل النقدي وحل المشكلات المعقدة والتفكير الإبداعي.</p>
+                </div>
             </div>
+        </section>
 
-            <!-- Genre Filter (now for API fetch) -->
-            <div>
-                <label for="genre-filter" class="block text-gray-700 text-base font-medium mb-2">تصفية حسب النوع:</label>
-                <select id="genre-filter" class="w-full">
-                    <option value="all">كل الأنواع</option>
-                    <option value="mmorpg">MMORPG</option>
-                    <option value="shooter">إطلاق نار</option>
-                    <option value="strategy">استراتيجية</option>
-                    <option value="moba">MOBA</option>
-                    <option value="racing">سباقات</option>
-                    <option value="sports">رياضة</option>
-                    <option value="social">اجتماعية</option>
-                    <option value="sandbox">عالم مفتوح</option>
-                    <option value="survival">بقاء</option>
-                    <option value="pvp">لاعب ضد لاعب</option>
-                    <option value="pve">لاعب ضد بيئة</option>
-                    <option value="pixel">بكسل</option>
-                    <option value="voxel">فوكسل</option>
-                    <option value="zombie">زومبي</option>
-                    <option value="turn-based">قائم على الأدوار</option>
-                    <option value="first-person">منظور أول</option>
-                    <option value="third-person">منظور ثالث</option>
-                    <option value="top-down">منظور علوي</option>
-                    <option value="anime">أنمي</option>
-                    <option value="fantasy">خيالي</option>
-                    <option value="sci-fi">خيال علمي</option>
-                    <option value="card">بطاقات</option>
-                    <option value="battle-royale">باتل رويال</option>
-                    <option value="fighting">قتال</option>
-                    <option value="action-rpg">أكشن آر بي جي</option>
-                    <option value="action">أكشن</option>
-                    <option value="military">عسكري</option>
-                    <option value="martial-arts">فنون قتالية</option>
-                    <option value="low-spec">مواصفات منخفضة</option>
-                    <option value="horror">رعب</option>
-                    <option value="flight">طيران</option>
-                    <option value="driving">قيادة</option>
-                    <option value="tower-defense">دفاع عن الأبراج</option>
-                    <option value="mmo">MMO</option>
-                    <option value="open-world">عالم مفتوح</option>
-                    <option value="anime">أنيمي</option>
-                    <option value="strategy">استراتيجية</option>
-                    <option value="fantasy">فانتازيا</option>
-                    <option value="card-game">ألعاب ورق</option>
-                </select>
+        <!-- My Websites Section - New Section -->
+        <section id="my-websites" class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8 mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 section-title">مواقعي</h2>
+            <p class="text-gray-700 leading-relaxed text-lg mb-6">
+                هنا يمكنك استكشاف بعض المواقع والمشاريع التي قمت بإنشائها أو المساهمة فيها:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Website Card 1: مصادر اسلاميه -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">مصادر إسلامية</h3>
+                    <p class="text-gray-600 mb-4">موقع يهدف إلى توفير مصادر إسلامية متنوعة.</p>
+                    <a href="https://jjjjjvm.github.io/alba7ith_alshr3i/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 2: علوم الكلام ( تعلم عربي وانقليزي ) -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">علوم الكلام (تعلم عربي وإنجليزي)</h3>
+                    <p class="text-gray-600 mb-4">منصة لتعلم علوم الكلام باللغتين العربية والإنجليزية.</p>
+                    <a href="https://jjjjjvm.github.io/3lom-alkalam/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 3: صانع الشعر -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">صانع الشعر</h3>
+                    <p class="text-gray-600 mb-4">أداة لمساعدتك في إنشاء وتوليد الشعر.</p>
+                    <a href="https://jjjjjvm.github.io/9ani3_alsh3r/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 4: باحث محرك بحث -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">باحث (محرك بحث)</h3>
+                    <p class="text-gray-600 mb-4">محرك بحث خاص لمساعدتك في العثور على المعلومات.</p>
+                    <a href="https://jjjjjvm.github.io/IntlogiA/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 5: ذكاء اصطناعي -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">مساعد الذكاء الاصطناعي</h3>
+                    <p class="text-gray-600 mb-4">أداة مساعدة تعتمد على الذكاء الاصطناعي.</p>
+                    <a href="https://jjjjjvm.github.io/msa3d_aldakaa_ala9tna3i/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 6: مولد صور ذكاء اصطناعي -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">مولد صور بالذكاء الاصطناعي</h3>
+                    <p class="text-gray-600 mb-4">أداة لتوليد الصور باستخدام تقنيات الذكاء الاصطناعي.</p>
+                    <a href="https://jjjjjvm.github.io/Mold/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 7: باحث في منصات التواصل الاجتماعي -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">باحث في منصات التواصل الاجتماعي</h3>
+                    <p class="text-gray-600 mb-4">أداة للبحث واستكشاف المحتوى على منصات التواصل الاجتماعي.</p>
+                    <a href="https://jjjjjvm.github.io/hadef/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
+                <!-- Website Card 8: ثقفني - المثقف الاصطناعي -->
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition duration-300">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">ثقفني - المثقف الاصطناعي</h3>
+                    <p class="text-gray-600 mb-4">مساعد ذكاء اصطناعي يقدم معلومات ثقافية.</p>
+                    <a href="https://jjjjjvm.github.io/Thqfni/" target="_blank" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full text-sm transition duration-300">
+                        زيارة الموقع
+                    </a>
+                </div>
             </div>
+        </section>
 
-            <!-- Fetch Games Button (instead of AI search) -->
-            <div class="mt-6 pt-6 border-t border-gray-200">
-                <button id="fetch-games-button" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg w-full transition duration-300 transform hover:scale-105">
-                    جلب الألعاب
-                </button>
-                <div id="loading-indicator" class="hidden text-center text-gray-500 mt-2">جاري جلب الألعاب...</div>
-                <div id="api-error-message" class="hidden text-center text-red-500 mt-2"></div>
-            </div>
-
-            <!-- Local Search Input (filters currently displayed games) -->
-            <div class="mt-6 pt-6 border-t border-gray-200">
-                <label for="search-input" class="block text-gray-700 text-base font-medium mb-2">بحث محلي باسم اللعبة (داخل النتائج المعروضة):</label>
-                <input type="text" id="search-input" placeholder="ابحث هنا..." class="w-full">
-            </div>
-
-        </div>
-
-        <div class="content-area flex-grow">
-            <!-- Game List Display Area -->
-            <div id="game-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Game cards will be injected here by JavaScript -->
-            </div>
-
-            <!-- No Results Message -->
-            <div id="no-results" class="hidden text-center text-gray-600 text-xl py-12 rounded-xl bg-gray-50 border border-gray-200 mt-8">
-                لا توجد ألعاب مطابقة للمعايير المحددة.
-            </div>
-        </div>
+        <!-- Removed Contact Section -->
+        <p class="text-center text-gray-500 text-sm mt-8">
+            © 2025 اسمك. جميع الحقوق محفوظة.
+        </p>
     </div>
-
-    <!-- The Modal -->
-    <div id="game-details-modal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content flex flex-col items-center text-center">
-            <span class="close-button">&times;</span>
-            <img id="modal-game-image" src="" alt="Game Image" class="w-32 h-32 object-cover rounded-full mb-6 shadow-md border-4 border-emerald-300">
-            <h2 id="modal-game-title" class="text-3xl font-extrabold text-gray-900 mb-3"></h2>
-            <p id="modal-game-description" class="text-gray-700 text-base mb-4 leading-relaxed"></p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-gray-800 text-lg mb-8 w-full">
-                <p>المنصة: <span id="modal-game-platform" class="font-semibold text-blue-700"></span></p>
-                <p>النوع: <span id="modal-game-genre" class="font-semibold text-green-700"></span></p>
-                <p>التصنيف العمري: <span id="modal-game-age-rating" class="font-semibold text-red-600">غير معروف</span></p>
-                <p>المطور: <span id="modal-game-developer" class="font-semibold text-purple-700"></span></p>
-                <p>سنة الإصدار: <span id="modal-game-release-year" class="font-semibold text-gray-600"></span></p>
-            </div>
-            <a id="modal-download-button" href="#" target="_blank" rel="noopener noreferrer"
-               class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105">
-                زيارة صفحة اللعبة الرسمية
-            </a>
-        </div>
-    </div>
-
-    <script>
-        // This array will hold the games fetched from the API.
-        let games = [];
-        let fetchedGames = []; // To store the original fetched games for local filtering
-
-        // Get references to DOM elements
-        const platformFilter = document.getElementById('platform-filter');
-        const genreFilter = document.getElementById('genre-filter');
-        const searchInput = document.getElementById('search-input');
-        const gameList = document.getElementById('game-list');
-        const noResultsMessage = document.getElementById('no-results');
-
-        // API Fetch elements
-        const fetchGamesButton = document.getElementById('fetch-games-button');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const apiErrorMessage = document.getElementById('api-error-message');
-
-        // Modal elements
-        const modal = document.getElementById('game-details-modal');
-        const closeButton = document.querySelector('.close-button');
-        const modalGameImage = document.getElementById('modal-game-image');
-        const modalGameTitle = document.getElementById('modal-game-title');
-        const modalGameDescription = document.getElementById('modal-game-description');
-        const modalGamePlatform = document.getElementById('modal-game-platform');
-        const modalGameGenre = document.getElementById('modal-game-genre');
-        const modalGameAgeRating = document.getElementById('modal-game-age-rating');
-        const modalGameDeveloper = document.getElementById('modal-game-developer');
-        const modalGameReleaseYear = document.getElementById('modal-game-release-year');
-        const modalDownloadButton = document.getElementById('modal-download-button');
-
-        // Base URL for FreeToGame API
-        const FREE_TO_GAME_API_URL = 'https://www.freetogame.com/api/games';
-        const PROXY_URL = 'https://api.allorigins.win/raw?url='; // Proxy to bypass CORS issues
-
-        // THIS IS WHERE YOU WOULD PLACE AN API KEY IF NEEDED BY ANOTHER API
-        // هذا هو المكان الذي تضع فيه مفتاح API إذا كانت واجهة برمجة تطبيقات أخرى تتطلبه
-        const YOUR_API_KEY = "AIzaSyCkN_5SuUfS_21mlzQ0BL3XE74Eh36W2Jw"; // Replace with your actual API key if needed
-
-        // Function to display games
-        function displayGames(gamesToDisplay) {
-            gameList.innerHTML = ''; // Clear current list
-
-            if (gamesToDisplay.length === 0) {
-                noResultsMessage.classList.remove('hidden'); // Show no results message
-            } else {
-                noResultsMessage.classList.add('hidden'); // Hide no results message
-                gamesToDisplay.forEach(game => {
-                    const gameCardDiv = document.createElement('div');
-                    gameCardDiv.classList.add('game-card', 'flex', 'flex-col', 'items-center', 'text-center');
-                    gameCardDiv.innerHTML = `
-                        <img src="${game.thumbnail || 'https://placehold.co/128x128/6B7280/ffffff?text=Game+Image'}" alt="${game.title}" class="w-24 h-24 object-cover rounded-full mb-4 shadow-sm border-2 border-emerald-200">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">${game.title || 'عنوان اللعبة'}</h3>
-                        <p class="text-gray-700 text-lg mb-2">المنصة: <span class="font-semibold text-blue-700">${game.platform || 'غير معروف'}</span></p>
-                        <p class="text-gray-700 text-lg mb-4">النوع: <span class="font-semibold text-green-700">${game.genre || 'غير معروف'}</span></p>
-                        <p class="text-gray-800 text-base flex-grow">${game.short_description || 'لا يوجد وصف.'}</p>
-                    `;
-                    gameCardDiv.addEventListener('click', () => openGameDetailsModal(game));
-                    gameList.appendChild(gameCardDiv);
-                });
-            }
-        }
-
-        // Function to open the game details modal
-        function openGameDetailsModal(game) {
-            modalGameImage.src = game.thumbnail || 'https://placehold.co/128x128/6B7280/ffffff?text=Game+Image';
-            modalGameTitle.textContent = game.title || 'عنوان اللعبة';
-            modalGameDescription.textContent = game.short_description || 'لا يوجد وصف.';
-            modalGamePlatform.textContent = game.platform || 'غير معروف';
-            modalGameGenre.textContent = game.genre || 'غير معروف';
-            modalGameAgeRating.textContent = 'غير معروف'; // API doesn't provide this
-            modalGameDeveloper.textContent = game.developer || 'غير معروف';
-            modalGameReleaseYear.textContent = game.release_date ? new Date(game.release_date).getFullYear() : 'غير معروف';
-            modalDownloadButton.href = game.game_url || '#'; // Link to FreeToGame page
-            modal.style.display = 'flex'; // Show the modal
-        }
-
-        // Function to close the modal
-        function closeGameDetailsModal() {
-            modal.style.display = 'none'; // Hide the modal
-        }
-
-        // Event listener for closing the modal using the close button
-        closeButton.addEventListener('click', closeGameDetailsModal);
-
-        // Event listener for closing the modal when clicking outside the content
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                closeGameDetailsModal();
-            }
-        });
-
-        // Function to filter games based on current selections (works on the 'fetchedGames' array)
-        function filterGamesLocally() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-
-            let filtered = fetchedGames.filter(game => {
-                const searchMatch = (game.title && game.title.toLowerCase().includes(searchTerm)) ||
-                                    (game.short_description && game.short_description.toLowerCase().includes(searchTerm));
-                return searchMatch;
-            });
-            displayGames(filtered);
-        }
-
-        // Fetch Games from API
-        fetchGamesButton.addEventListener('click', fetchGamesFromAPI);
-
-        async function fetchGamesFromAPI() {
-            const selectedPlatform = platformFilter.value;
-            const selectedGenre = genreFilter.value;
-
-            let apiUrl = FREE_TO_GAME_API_URL;
-            const params = [];
-
-            if (selectedPlatform !== 'all') {
-                params.push(`platform=${selectedPlatform}`);
-            }
-            if (selectedGenre !== 'all') {
-                params.push(`category=${selectedGenre}`);
-            }
-
-            if (params.length > 0) {
-                apiUrl += '?' + params.join('&');
-            }
-
-            // In case you need to pass an API key with another API:
-            // يمكنك استخدام مفتاح الـ API هنا إذا كانت واجهة برمجة تطبيقات أخرى تتطلبه
-            // For example, if it's a header:
-            // const headers = new Headers();
-            // headers.append('X-API-Key', YOUR_API_KEY);
-            // Or if it's a query parameter:
-            // apiUrl += `&api_key=${YOUR_API_KEY}`;
-
-            // Use the proxy URL
-            const finalUrl = `${PROXY_URL}${encodeURIComponent(apiUrl)}`;
-
-            loadingIndicator.classList.remove('hidden');
-            apiErrorMessage.classList.add('hidden');
-            noResultsMessage.classList.add('hidden');
-            gameList.innerHTML = ''; // Clear current games
-
-            try {
-                const response = await fetch(finalUrl /*, { headers: headers } if using headers */ );
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-
-                // FreeToGame API sometimes returns an object with status 0 if no results,
-                // or an empty array. Handle both.
-                if (data.status && data.status === 0) {
-                     fetchedGames = [];
-                     displayGames([]);
-                } else if (Array.isArray(data)) {
-                    fetchedGames = data; // Store original fetched data
-                    displayGames(fetchedGames); // Display all fetched games initially
-                } else {
-                    throw new Error("Invalid data format received from API.");
-                }
-
-            } catch (error) {
-                console.error("Error fetching games from API:", error);
-                apiErrorMessage.textContent = `فشل في جلب الألعاب: ${error.message}. الرجاء المحاولة لاحقًا.`;
-                apiErrorMessage.classList.remove('hidden');
-                displayGames([]); // Clear any old games if error
-            } finally {
-                loadingIndicator.classList.add('hidden');
-            }
-        }
-
-        // Add event listener for local search input
-        searchInput.addEventListener('input', filterGamesLocally);
-
-        // Initial fetch of all games on page load
-        window.onload = fetchGamesFromAPI;
-    </script>
 </body>
 </html>
